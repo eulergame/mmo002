@@ -104,11 +104,11 @@ public class MNISTread : MonoBehaviour {
 
         	byte lbl = brLabels.ReadByte();
 			lablesTesting[di] = lbl;
-			VisualizarNumero(valuesTesting[10000-1], 10000-1);
+			DisplayNumber(valuesTesting[10000-1], 10000-1);
     	} // each image
 	}
 
-	public void VisualizarNumero(float[] info, int labelId)
+	public void DisplayNumber(float[] info, int labelId)
 	{
 		for (int i = 0; i < 28; ++i)
       	{
@@ -134,7 +134,7 @@ public class MNISTread : MonoBehaviour {
       	}
 	}
 
-	public float[] leerInfo()
+	public float[] readInfo()
 	{
 		float[] val = new float[28*28];
 		for (int i = 0; i < 28; ++i)
