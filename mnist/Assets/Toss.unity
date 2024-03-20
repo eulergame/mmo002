@@ -415,8 +415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b659a57d5a5b654d87af9b7a6f996ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  N: 1000
-  Pairs: 1
+  N: 10000
+  Pairs: 10
   DotPrefab: {fileID: 8152486818238053220, guid: 824de7777e3cab143942876175cd8698,
     type: 3}
 --- !u!4 &1656245355

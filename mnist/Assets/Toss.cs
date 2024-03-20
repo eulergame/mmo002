@@ -19,32 +19,50 @@ public class Toss : MonoBehaviour
 		{
 			var o = GameObject.Instantiate(DotPrefab);
 			var p = o.transform.position;
-			p.x = i;
+			p.x = i - 5;
 			o.transform.position = p;
 			dots.Add(o);
 			sample.Add(0);
 		}
-		TestAsync(r, dots, sample).Forget();
+		TestAsync(r, dots, sample, N, Pairs).Forget();
 	}
 
-	private async UniTask TestAsync(System.Random r, List<GameObject> dots, List<int> sample)
+	private static async UniTask TestAsync(System.Random r, List<GameObject> dots, List<int> sample, int N, int Pairs)
 	{
 		for (int i = 1; i <= N; i++)
 		{
-			await UniTask.Delay(TimeSpan.FromMilliseconds(30));
-			Once(r, dots, sample, i);
+			await UniTask.Delay(TimeSpan.FromMilliseconds(10));
+			var x = Once(r, dots, sample, i, Pairs);
+			sample[x]++;
+			UpdateCurve(dots, sample, Pairs, i);
 		}
 	}
 
-	private static void Once(System.Random r, List<GameObject> dots, List<int> sample, int i)
+	private static void UpdateCurve(List<GameObject> dots, List<int> sample, int Pairs, int i)
 	{
-		//[0, 1)
-		var e = r.NextDouble();
-		var x = e < 0.5f ? 0 : 1;
-		var t = dots[x].transform;
-		var p = t.position;
-		sample[x]++;
-		p.y = 1.0f * sample[x] / i -5f;
-		t.position = p;
+		for (int k = 0; k <= Pairs; k++)
+		{
+			var t = dots[k].transform;
+			var p = t.position;
+			p.y = (1.0f * sample[k] / i) * 10 - 5f;
+			t.position = p;
+		}
+	}
+
+	private static int Once(System.Random r, List<GameObject> dots, List<int> sample, int i, int Pairs)
+	{
+		int x = 0;
+		for (int k = 0; k < Pairs; k++)
+		{
+			//[0, 1)
+			var e = r.NextDouble();
+			x += PNCheck(e);
+		}
+		return x;
+	}
+
+	private static int PNCheck(double e)
+	{
+		return e < 0.5f ? 0 : 1;
 	}
 }
