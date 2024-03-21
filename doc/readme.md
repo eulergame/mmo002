@@ -39,3 +39,9 @@
 [22.4 Trillion Digits of My Pi World Record (pi2e.ch)](https://pi2e.ch/blog/2017/03/10/pi-digits-download/)
 
 [Martin Krzywinski - Art of Pi, e and Phi - Canada&#39;s Michael Smith Genome Sciences Centre (bcgsc.ca)](https://mk.bcgsc.ca/pi/art/)
+
+[Partial Derivatives (fwidth) | Ronja&#39;s tutorials (ronja-tutorials.com)](https://www.ronja-tutorials.com/post/046-fwidth/)
+
+[Math - Practice, Tests, Forum/Free Help (math10.com)](https://www.math10.com/)
+
+[Math Games, Cool Math Games (math10.com)](https://www.math10.com/en/math-games/)

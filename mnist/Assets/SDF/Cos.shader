@@ -1,14 +1,11 @@
-Shader "X/Dot"
+Shader "X/Cos"
 {
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
-        _OutlineColor ("OutlineColor", Color) = (1,1,1,1)
-        _Radius ("Radius", float) = 1
         _Stroke ("Stroke", float) = 0.1
         _Strength ("Strength", float) = 1
-        _Softness ("Softness", float) = 1
-        _Center ("Center", vector) = (0,0,0)
+        _Zero ("Zero", float) = 0
     }
     SubShader
     {
@@ -35,12 +32,9 @@ Shader "X/Dot"
             };
 
             float4 _Color;
-            float4 _OutlineColor;
-            float _Radius;
-            float2 _Center;
             float _Stroke;
             float _Strength;
-            float _Softness;
+            float _Zero;
             v2f vert (appdata v)
             {
                 v2f o;
@@ -49,37 +43,19 @@ Shader "X/Dot"
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
-            float circle(float2 p, float2 center)
-            {
-                return length(p - center);
-            }
+            
             //A important thing about signed distance functions is that when inside a object we get the negative distance to the surface 
             //(that¡¯s what the ¡°signed¡± in signed distance field stands for).
-            float distance(float2 p, float radius, float2 center)
+            float distance(float2 p)
             {
-                return circle(p, center) - radius;
-            }
-            fixed4 GetColor(half d, fixed4 faceColor, fixed4 outlineColor, half outline, half softness)
-            {
-	            half faceAlpha = 1-saturate((d - outline * 0.5 + softness * 0.5) / (1.0 + softness));
-	            half outlineAlpha = saturate((d + outline * 0.5)) * sqrt(min(1.0, outline));
-
-	            faceColor.rgb *= faceColor.a;
-	            outlineColor.rgb *= outlineColor.a;
-
-	            faceColor = lerp(faceColor, outlineColor, outlineAlpha);
-
-	            faceColor *= faceAlpha;
-
-	            return faceColor;
+                return abs(p.y - cos(p.x-_Zero));
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float d = distance(i.worldPos.xy, _Radius, _Center);
+                float d = distance(i.worldPos.xy);
                 d = smoothstep(-_Stroke,_Stroke,d)*smoothstep(_Stroke,-_Stroke,d);
                 fixed4 col = _Color * sqrt(d) * _Strength;
-                //col = GetColor(d, _Color, _OutlineColor, _Stroke, _Softness);
                 return col;
             }
             ENDCG
