@@ -14,6 +14,8 @@
 
 [Backpropagation in Machine Learning - GeeksforGeeks](https://www.geeksforgeeks.org/backpropagation-in-machine-learning/)
 
+[Number Theory: Definition, Topics, Examples &amp; Problems - GeeksforGeeks](https://www.geeksforgeeks.org/number-theory/)
+
 [Home - Mathematics LibreTexts](https://math.libretexts.org/)
 
 [Home - Physics LibreTexts](https://phys.libretexts.org/?_gl=1*1fppeg9*_ga*MTA1Njg5MjUzMC4xNzEwOTIzNDI0*_ga_37C1BN2F1D*MTcxMDkyMzQ4OC4xLjEuMTcxMDkyMzU4Ny4wLjAuMA..?readerView)
@@ -55,3 +57,7 @@
 [Heart Curve -- from Wolfram MathWorld](https://mathworld.wolfram.com/HeartCurve.html)
 
 [The Book of Shaders](https://thebookofshaders.com/)
+
+[inspirnathan.com](https://inspirnathan.com/)
+
+[Topics - shaders (inspirnathan.com)](https://inspirnathan.com/topics/shaders)
