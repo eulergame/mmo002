@@ -115,7 +115,7 @@ Shader "X/Tangent"
                 }
                 
                 float2 c = p-a;
-                float cd = length(c);
+                float cd = length(c)+0.0001;
                 float d = dot(c, normalize(b-a));
                 return sqrt(cd*cd - d*d);
             }
@@ -128,6 +128,7 @@ Shader "X/Tangent"
             fixed4 frag (v2f i) : SV_Target
             {
                 float d = distancesegment(i.worldPos.xy, _SegmentX0, _SegmentX1);
+                //float d = distance(i.worldPos.xy);
                 float d2 = d;
                 float s = _Stroke;// * d;//(ddx(d2)+0.015);
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
