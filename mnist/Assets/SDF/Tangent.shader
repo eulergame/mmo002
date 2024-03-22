@@ -46,13 +46,14 @@ Shader "X/Tangent"
             
             //A important thing about signed distance functions is that when inside a object we get the negative distance to the surface 
             //(that¡¯s what the ¡°signed¡± in signed distance field stands for).
+            float2 parab(float2 p)
+            {
+                return float2(abs(p.y - (p.x-_Zero)*(p.x-_Zero)), 2*(p.x-_Zero));
+            }
             float distance(float2 p)
             {
-                float deltaY = abs(p.y - (p.x-_Zero)*(p.x-_Zero));
-                float derivative = 2*(p.x-_Zero);
-                float tangentTheta = derivative;
-                float cosTheta = 1.0/sqrt(1+tangentTheta*tangentTheta);
-                return deltaY * cosTheta;
+                float2 v = parab(p);
+                return v.x / sqrt(1 + v.y * v.y);
             }
 
             fixed4 frag (v2f i) : SV_Target
