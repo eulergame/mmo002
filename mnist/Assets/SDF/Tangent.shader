@@ -50,15 +50,47 @@ Shader "X/Tangent"
             {
                 return float2(abs(p.y - (p.x-_Zero)*(p.x-_Zero)), 2*(p.x-_Zero));
             }
+            float2 tangent(float2 p)
+            {
+                float c = cos(p.x-_Zero);
+                return float2(abs(p.y - tan(p.x-_Zero)), 1/(c*c + 0.0001));
+            }
+            float2 cosine(float2 p)
+            {
+                float c = -sin(p.x-_Zero);
+                return float2(abs(p.y - cos(p.x-_Zero)), c);
+            }
+            float2 sine(float2 p)
+            {
+                float c = cos(p.x-_Zero);
+                return float2(abs(p.y - sin(p.x-_Zero)), c);
+            }
+            float2 squareroot(float2 p)
+            {
+                float c = 1/(2*(sqrt(p.x-_Zero) + 0.0001));
+                return float2(abs(p.y - sqrt(p.x-_Zero)), c);
+            }
+            float2 lines(float2 p)
+            {
+                //f(x) = kx+b
+                float k =1;
+                float b = 0.1;
+                float c = k;
+                return float2(abs(p.y - (k*(p.x-_Zero) + b)), c);
+            }
+            float2 distancecircle(float2 p, float radius, float2 center)
+            {
+                return length(p - center) - radius;
+            }
             float distance(float2 p)
             {
-                float2 v = parab(p);
+                float2 v = lines(p);
                 return v.x / sqrt(1 + v.y * v.y);
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float d = distance(i.worldPos.xy);
+                float d = distancecircle(i.worldPos.xy, 2, float2(0,0));
                 float d2 = d;
                 float s = _Stroke;// * d;//(ddx(d2)+0.015);
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
