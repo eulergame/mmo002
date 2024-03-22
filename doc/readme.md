@@ -44,4 +44,14 @@
 
 [Math - Practice, Tests, Forum/Free Help (math10.com)](https://www.math10.com/)
 
+[Inigo Quilez :: computer graphics, mathematics, shaders, fractals, demoscene and more (iquilezles.org)](https://iquilezles.org/)
+
 [Math Games, Cool Math Games (math10.com)](https://www.math10.com/en/math-games/)
+
+[Shadertoy BETA](https://www.shadertoy.com/)
+
+[Graphtoy](https://graphtoy.com/)
+
+[Heart Curve -- from Wolfram MathWorld](https://mathworld.wolfram.com/HeartCurve.html)
+
+[The Book of Shaders](https://thebookofshaders.com/)
