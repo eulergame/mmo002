@@ -88,12 +88,32 @@ Shader "X/Tangent"
             }
             float2 distancesegment(float2 p, float2 a, float2 b)
             {
-                if(p.x < a.x){
-                    return length(p-a);
+                if(a.x > b.x)
+                {
+                    float2 temp = a;
+                    a = b;
+                    b = temp;
                 }
-                if(p.x > b.x){
-                    return length(p-b);
+                float k = -(b.x-a.x)/(b.y-a.y);
+                if(k < 0)
+                {
+                    if(p.y < (k*(p.x-a.x) + a.y)){
+                        return length(p-a);
+                    }
+                    if(p.y > (k*(p.x-b.x) + b.y)){
+                        return length(p-b);
+                    }
                 }
+                else
+                {
+                    if(p.y > (k*(p.x-a.x) + a.y)){
+                        return length(p-a);
+                    }
+                    if(p.y < (k*(p.x-b.x) + b.y)){
+                        return length(p-b);
+                    }
+                }
+                
                 float2 c = p-a;
                 float cd = length(c);
                 float d = dot(c, normalize(b-a));
