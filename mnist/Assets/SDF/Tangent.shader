@@ -48,14 +48,18 @@ Shader "X/Tangent"
             //(that¡¯s what the ¡°signed¡± in signed distance field stands for).
             float distance(float2 p)
             {
-                return abs(p.y - (p.x-_Zero)*(p.x-_Zero));
+                float deltaY = abs(p.y - (p.x-_Zero)*(p.x-_Zero));
+                float derivative = 2*(p.x-_Zero);
+                float tangentTheta = derivative;
+                float cosTheta = 1.0/sqrt(1+tangentTheta*tangentTheta);
+                return deltaY * cosTheta;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 float d = distance(i.worldPos.xy);
                 float d2 = d;
-                float s = _Stroke * (ddx(d2)+0.005);
+                float s = _Stroke;// * d;//(ddx(d2)+0.015);
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
                 fixed4 col = _Color * sqrt(d) * _Strength;
                 return col;
