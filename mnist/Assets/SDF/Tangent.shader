@@ -6,6 +6,8 @@ Shader "X/Tangent"
         _Stroke ("Stroke", float) = 0.1
         _Strength ("Strength", float) = 1
         _Zero ("Zero", float) = 0
+        _SegmentX0 ("SegmentX0", Vector) = (0,0,0,0)
+        _SegmentX1 ("SegmentX1", Vector) = (1,1,0,0)
     }
     SubShader
     {
@@ -35,6 +37,8 @@ Shader "X/Tangent"
             float _Stroke;
             float _Strength;
             float _Zero;
+            float2 _SegmentX0;
+            float2 _SegmentX1;
             v2f vert (appdata v)
             {
                 v2f o;
@@ -82,6 +86,19 @@ Shader "X/Tangent"
             {
                 return length(p - center) - radius;
             }
+            float2 distancesegment(float2 p, float2 a, float2 b)
+            {
+                if(p.x < a.x){
+                    return length(p-a);
+                }
+                if(p.x > b.x){
+                    return length(p-b);
+                }
+                float2 c = p-a;
+                float cd = length(c);
+                float d = dot(c, normalize(b-a));
+                return sqrt(cd*cd - d*d);
+            }
             float distance(float2 p)
             {
                 float2 v = lines(p);
@@ -90,7 +107,7 @@ Shader "X/Tangent"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float d = distancecircle(i.worldPos.xy, 2, float2(0,0));
+                float d = distancesegment(i.worldPos.xy, _SegmentX0, _SegmentX1);
                 float d2 = d;
                 float s = _Stroke;// * d;//(ddx(d2)+0.015);
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
