@@ -166,11 +166,31 @@ Shader "X/Tangent"
                     distancesegment(p, center + float2(-halfAxis, -halfAxis), center + float2(halfAxis, -halfAxis))); 
                 return min(a,b);
             }
+            float distancebezier(float2 p, float2 p0, float2 p1, float2 p2)
+            {
+                if(p.x < p0.x){
+                    return length(p-p0);
+                }
+                    
+                if(p.x > p2.x){
+                    return length(p-p2);
+                }
+                float a = p0.x - 2*p1.x + p2.x;
+                float b = 2*p1.x - 2*p0.x;
+                float c = p0.x - p.x;
+                float delta2 = b*b - 4*a*c;
+                
+                float t = (-b+sqrt(delta2))/(2*a);
+                float y = (1-t)*(1-t)*p0.y + 2*t*(1-t)*p1.y + t*t*p2.y;
+                return abs(p.y - y);
+            }
             fixed4 frag (v2f i) : SV_Target
             {
                 //float d = distancesegment(i.worldPos.xy, _SegmentX0, _SegmentX1);
                 //float d = distance(i.worldPos.xy);
-                float d = distancesquare(i.worldPos.xy, float2(0,0), 3);
+                //float d = distancesquare(i.worldPos.xy, float2(0,0), 3);
+                float d = distancebezier(i.worldPos.xy, float2(0,0), _SegmentX0, _SegmentX1);
+                
                 float d2 = d;
                 float s = _Stroke;// * (fwidth(d2));
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
