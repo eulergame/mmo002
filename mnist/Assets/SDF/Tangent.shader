@@ -94,6 +94,38 @@ Shader "X/Tangent"
                     a = b;
                     b = temp;
                 }
+                if(a.y == b.y)
+                {
+                    if(p.x < a.x){
+                        return length(p-a);
+                        }
+                    else if(p.x > b.x){
+                        return length(p-b);
+                        }
+                    else
+                    {
+                        return abs(p.y - a.y);
+                    }
+                }
+                if(a.x == b.x)
+                {
+                    if(a.y > b.y)
+                    {
+                        float2 temp = a;
+                        a = b;
+                        b = temp;
+                    }
+                    if(p.y < a.y){
+                        return length(p-a);
+                        }
+                    else if(p.y > b.y){
+                        return length(p-b);
+                        }
+                    else
+                    {
+                        return abs(p.x - a.x);
+                    }
+                }
                 float k = -(b.x-a.x)/(b.y-a.y);
                 if(k < 0)
                 {
@@ -104,7 +136,7 @@ Shader "X/Tangent"
                         return length(p-b);
                     }
                 }
-                else
+                else if(k>0)
                 {
                     if(p.y > (k*(p.x-a.x) + a.y)){
                         return length(p-a);
@@ -115,22 +147,32 @@ Shader "X/Tangent"
                 }
                 
                 float2 c = p-a;
-                float cd = length(c)+0.0001;
+                float cd = length(c);
                 float d = dot(c, normalize(b-a));
-                return sqrt(cd*cd - d*d);
+                return sqrt(max(cd*cd - d*d, 0));
             }
             float distance(float2 p)
             {
                 float2 v = lines(p);
                 return v.x / sqrt(1 + v.y * v.y);
             }
-
+            float distancesquare(float2 p, float2 center, float halfAxis)
+            {
+                float a = min(
+                    distancesegment(p, center + float2(-halfAxis, -halfAxis), center + float2(-halfAxis, halfAxis)),
+                    distancesegment(p, center + float2(halfAxis, -halfAxis), center + float2(halfAxis, halfAxis)));
+                float b = min(
+                    distancesegment(p, center + float2(-halfAxis, halfAxis), center + float2(halfAxis, halfAxis)),
+                    distancesegment(p, center + float2(-halfAxis, -halfAxis), center + float2(halfAxis, -halfAxis))); 
+                return min(a,b);
+            }
             fixed4 frag (v2f i) : SV_Target
             {
-                float d = distancesegment(i.worldPos.xy, _SegmentX0, _SegmentX1);
+                //float d = distancesegment(i.worldPos.xy, _SegmentX0, _SegmentX1);
                 //float d = distance(i.worldPos.xy);
+                float d = distancesquare(i.worldPos.xy, float2(0,0), 3);
                 float d2 = d;
-                float s = _Stroke;// * d;//(ddx(d2)+0.015);
+                float s = _Stroke;// * (fwidth(d2));
                 d = smoothstep(-s,s,d)*smoothstep(s,-s,d);
                 fixed4 col = _Color * sqrt(d) * _Strength;
                 return col;
