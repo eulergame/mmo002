@@ -67,3 +67,11 @@
 [AutoGen - AI Images | Generative AI | Unity Asset Store](https://assetstore.unity.com/packages/tools/generative-ai/autogen-ai-images-244877#reviews)
 
 [Layer AI | Game Art Without Limits](https://www.layer.ai/)
+
+[User Settings › Tokens (layer.ai)](https://app.layer.ai/settings/tokens)
+
+pat_J4iB9AvKukkXREmO7ZBSZJYtiAWrrpZTahkxgwHH0caSLCgPmjMAmeDIwtvmlzNCPvzTcLlO1CBgxDdYi9ixnB
+
+[Fy! Studio - AI Image Generator - Easy, fast and free - Create amazing and high resolution artworks using artificial intelligence (iamfy.co)](https://www.iamfy.co/studio/landing/ai-image-generator)
+
+[asc-community/AngouriMath: New open-source cross-platform symbolic algebra library for C# and F#. Can be used for both production and research purposes. (github.com)](https://github.com/asc-community/AngouriMath)
