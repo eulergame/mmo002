@@ -61,3 +61,9 @@
 [inspirnathan.com](https://inspirnathan.com/)
 
 [Topics - shaders (inspirnathan.com)](https://inspirnathan.com/topics/shaders)
+
+[Blockade Labs Skybox AI - AI-Generated 3D Worlds](https://skybox.blockadelabs.com/)
+
+[AutoGen - AI Images | Generative AI | Unity Asset Store](https://assetstore.unity.com/packages/tools/generative-ai/autogen-ai-images-244877#reviews)
+
+[Layer AI | Game Art Without Limits](https://www.layer.ai/)
