@@ -75,3 +75,5 @@ pat_J4iB9AvKukkXREmO7ZBSZJYtiAWrrpZTahkxgwHH0caSLCgPmjMAmeDIwtvmlzNCPvzTcLlO1CBg
 [Fy! Studio - AI Image Generator - Easy, fast and free - Create amazing and high resolution artworks using artificial intelligence (iamfy.co)](https://www.iamfy.co/studio/landing/ai-image-generator)
 
 [asc-community/AngouriMath: New open-source cross-platform symbolic algebra library for C# and F#. Can be used for both production and research purposes. (github.com)](https://github.com/asc-community/AngouriMath)
+
+[AngouriMath | wiki/index](https://am.angouri.org/wiki/index.html)

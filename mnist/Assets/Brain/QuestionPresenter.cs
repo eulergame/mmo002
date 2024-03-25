@@ -25,6 +25,10 @@ namespace X.HotFix.Games.Brain
 				Entity expr2 = "true implies false";
 				Debug.Log(expr2.EvalBoolean()); // false
 			}
+			{
+				Debug.Log(Envaluate("3 + 3 x 3".Replace('x','*'))); 
+				//Debug.Log(Envaluate("3+3/3")); 
+			}
 		}
 		//Geometric Sequence
 		public static List<int> GeometricSequence(int initValue, int commonRatio, int n)
@@ -62,6 +66,11 @@ namespace X.HotFix.Games.Brain
 				result.Add(maximum.value - x);
 			}
 			return result;
+		}
+		public static int Envaluate(string expression)
+		{
+			Entity e = expression;
+			return (int)e.EvalNumerical().RealPart;
 		}
 	}
 }
