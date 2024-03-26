@@ -81,3 +81,5 @@ pat_J4iB9AvKukkXREmO7ZBSZJYtiAWrrpZTahkxgwHH0caSLCgPmjMAmeDIwtvmlzNCPvzTcLlO1CBg
 [Visualizing Algorithms (ocks.org)](https://bost.ocks.org/mike/algorithms/#shuffling)
 
 [Mike Bostock (ocks.org)](https://bost.ocks.org/mike/)
+
+[Sorting Algorithms - GeeksforGeeks](https://www.geeksforgeeks.org/sorting-algorithms/)
