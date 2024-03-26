@@ -29,6 +29,10 @@ namespace X.HotFix.Games.Brain
 				Debug.Log(Envaluate("3 + 3 x 3".Replace('x','*'))); 
 				//Debug.Log(Envaluate("3+3/3")); 
 			}
+			foreach (var x in RandomNumbersNoRepeated(1,10,4))
+			{
+				Debug.Log(x);
+			}
 		}
 		//Geometric Sequence
 		public static List<int> GeometricSequence(int initValue, int commonRatio, int n)
@@ -72,6 +76,13 @@ namespace X.HotFix.Games.Brain
 			Entity e = expression;
 			return (int)e.EvalNumerical().RealPart;
 		}
+		
+		public static IEnumerable<int> RandomNumbersNoRepeated(int minimux, int maxmum, int n)
+		{
+			var r = new System.Random();
+			return Enumerable.Range(minimux, maxmum-minimux+1).OrderBy(x=>r.NextDouble()).Take(n);
+		}
+
 	}
 }
 

@@ -77,3 +77,7 @@ pat_J4iB9AvKukkXREmO7ZBSZJYtiAWrrpZTahkxgwHH0caSLCgPmjMAmeDIwtvmlzNCPvzTcLlO1CBg
 [asc-community/AngouriMath: New open-source cross-platform symbolic algebra library for C# and F#. Can be used for both production and research purposes. (github.com)](https://github.com/asc-community/AngouriMath)
 
 [AngouriMath | wiki/index](https://am.angouri.org/wiki/index.html)
+
+[Visualizing Algorithms (ocks.org)](https://bost.ocks.org/mike/algorithms/#shuffling)
+
+[Mike Bostock (ocks.org)](https://bost.ocks.org/mike/)
