@@ -6,6 +6,11 @@ using UniRx;
 using UnityEngine;
 namespace X.HotFix.Games.Sort
 {
+	public enum eSortAlgorithm
+	{
+		Selection,
+		Bubble
+	}
 	public class SortPresenter : MonoBehaviour
 	{
 		[SerializeField] private int N;
@@ -14,7 +19,7 @@ namespace X.HotFix.Games.Sort
 		[SerializeField] private GameObject ElementPrefab;
 		[SerializeField] private float SwapInSeconds;
 		[SerializeField] private float IntervalInSeconds;
-
+		[SerializeField] private eSortAlgorithm ESortAlgorithm;
 		private void Start()
 		{
 			var elements = new List<ElementPresenter>();
@@ -34,19 +39,57 @@ namespace X.HotFix.Games.Sort
 		//The algorithm repeatedly selects the smallest (or largest) element from the unsorted portion of the list
 		//and swaps it with the first element of the unsorted part.
 		//This process is repeated for the remaining unsorted portion until the entire list is sorted. 
+		//Time Complexity: The time complexity of Selection Sort is O(N2)
 		private async UniTask Sort(List<ElementPresenter> elements)
 		{
-			for (int i = 0; i < elements.Count; i++)
+			Func<List<ElementPresenter>, UniTask> s = ESortAlgorithm switch
+			{
+				eSortAlgorithm.Selection => Selection,
+				eSortAlgorithm.Bubble => Bubble,
+				_ => throw new NotImplementedException(),
+			};
+			await s(elements);
+		}
+
+		private async UniTask Selection(List<ElementPresenter> elements)
+		{
+			for (int i = 0; i <= elements.Count - 1; i++)
 			{
 				var e = Smallest(elements, i, elements.Count - 1);
+				e.UpdateState(eElementState.Swapping);
 				await Swap(elements, elements[i], e, SwapInSeconds);
+				e.UpdateState(eElementState.Sorted);
 				await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
 			}
 		}
 
+		//In Bubble Sort algorithm, 
+		//traverse from left and compare adjacent elements and the higher one is placed at right side.
+		//In this way, the largest element is moved to the rightmost end at first.
+		//This process is then continued to find the second largest and place it and so on until the data is sorted.
+		private async UniTask Bubble(List<ElementPresenter> elements)
+		{
+			for (int i = 0; i <= elements.Count - 2; i++)
+			{
+				for (int k = 0; k <= elements.Count - 2 - i; k++)
+				{
+					if (elements[k].Value > elements[k + 1].Value)
+					{
+						elements[k].UpdateState(eElementState.Swapping);
+						elements[k + 1].UpdateState(eElementState.Swapping);
+						await Swap(elements, elements[k], elements[k + 1], SwapInSeconds);
+						await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+						elements[k].UpdateState(eElementState.UnSort);
+						elements[k + 1].UpdateState(eElementState.UnSort);
+					}
+				}
+				elements[elements.Count - i - 1].UpdateState(eElementState.Sorted);
+			}
+			await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+			elements[0].UpdateState(eElementState.Sorted);
+		}
 		private static async UniTask Swap(List<ElementPresenter> elements, ElementPresenter elementPresenter, ElementPresenter e, float swapInSeconds)
 		{
-			e.UpdateState(eElementState.Swapping);
 			await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
 			var a = elementPresenter.Index;
 			var b = e.Index;
@@ -57,7 +100,6 @@ namespace X.HotFix.Games.Sort
 					e.MoveVertical(a, swapInSeconds)
 					);
 			}
-			e.UpdateState(eElementState.Sorted);
 			elements[b] = elementPresenter;
 			elements[a] = e;
 		}
