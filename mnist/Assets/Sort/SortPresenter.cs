@@ -12,6 +12,8 @@ namespace X.HotFix.Games.Sort
 		[SerializeField] private int Minimum;
 		[SerializeField] private int Maximum;
 		[SerializeField] private GameObject ElementPrefab;
+		[SerializeField] private float SwapInSeconds;
+		[SerializeField] private float IntervalInSeconds;
 
 		private void Start()
 		{
@@ -37,25 +39,28 @@ namespace X.HotFix.Games.Sort
 			for (int i = 0; i < elements.Count; i++)
 			{
 				var e = Smallest(elements, i, elements.Count - 1);
-				Swap(elements, elements[i], e);
-				await UniTask.Delay(TimeSpan.FromMilliseconds(1600));
+				await Swap(elements, elements[i], e, SwapInSeconds);
+				await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
 			}
 		}
 
-		private void Swap(List<ElementPresenter> elements, ElementPresenter elementPresenter, ElementPresenter e)
+		private static async UniTask Swap(List<ElementPresenter> elements, ElementPresenter elementPresenter, ElementPresenter e, float swapInSeconds)
 		{
 			if (elementPresenter.Index == e.Index)
 			{
 				return;
 			}
-			var i = elementPresenter.Index;
-			elementPresenter.MoveVertical(e.Index);
-			elements[e.Index] = elementPresenter;
-			e.MoveVertical(i);
-			elements[i] = e;
+			var a = elementPresenter.Index;
+			var b = e.Index;
+			await UniTask.WhenAll(
+				elementPresenter.MoveVertical(b, swapInSeconds),
+				e.MoveVertical(a, swapInSeconds)
+				);
+			elements[b] = elementPresenter;
+			elements[a] = e;
 		}
 
-		private ElementPresenter Smallest(List<ElementPresenter> elements, int from, int to)
+		private static ElementPresenter Smallest(List<ElementPresenter> elements, int from, int to)
 		{
 			ElementPresenter e = elements[from];
 			for (int i = from + 1; i <= to; i++)

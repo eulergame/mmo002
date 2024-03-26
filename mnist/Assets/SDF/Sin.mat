@@ -74,8 +74,8 @@ Material:
     - _Softness: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.93
-    - _Stroke: 0.08
+    - _Strength: 1.27
+    - _Stroke: 0.04
     - _UVSec: 0
     - _ZWrite: 1
     - _Zero: 0
@@ -84,4 +84,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.9056604, g: 0.10594514, b: 0.10594514, a: 1}
+    - _SegmentX0: {r: 1.64, g: 1.91, b: 0, a: 0}
+    - _SegmentX1: {r: 3.51, g: 2.04, b: 0, a: 0}
   m_BuildTextureStacks: []
