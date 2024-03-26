@@ -9,7 +9,8 @@ namespace X.HotFix.Games.Sort
 	public enum eSortAlgorithm
 	{
 		Selection,
-		Bubble
+		Bubble,
+		Insertion,
 	}
 	public class SortPresenter : MonoBehaviour
 	{
@@ -46,6 +47,7 @@ namespace X.HotFix.Games.Sort
 			{
 				eSortAlgorithm.Selection => Selection,
 				eSortAlgorithm.Bubble => Bubble,
+				eSortAlgorithm.Insertion => Insertion,
 				_ => throw new NotImplementedException(),
 			};
 			await s(elements);
@@ -87,6 +89,34 @@ namespace X.HotFix.Games.Sort
 			}
 			await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
 			elements[0].UpdateState(eElementState.Sorted);
+		}
+		//Insertion Sort Algorithm
+		//To sort an array of size N in ascending order iterate over the array and compare the current element(key) to its predecessor,
+		//if the key element is smaller than its predecessor,
+		//compare it to the elements before.Move the greater elements one position up to make space for the swapped element.
+		private async UniTask Insertion(List<ElementPresenter> elements)
+		{
+			elements[0].UpdateState(eElementState.Sorted);
+			await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+			for (int i = 1; i <= elements.Count - 1; i++)
+			{
+				for (int k = i; k > 0; k--)
+				{
+					if (elements[k].Value < elements[k - 1].Value)
+					{
+						elements[k].UpdateState(eElementState.Swapping);
+						await Swap(elements, elements[k], elements[k - 1], SwapInSeconds);
+						await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+						elements[k].UpdateState(eElementState.Sorted);
+						elements[k-1].UpdateState(eElementState.Sorted);
+					}
+					else
+					{
+						break;
+					}
+				}
+				elements[i].UpdateState(eElementState.Sorted);
+			}
 		}
 		private static async UniTask Swap(List<ElementPresenter> elements, ElementPresenter elementPresenter, ElementPresenter e, float swapInSeconds)
 		{

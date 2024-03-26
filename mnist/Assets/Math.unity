@@ -152,14 +152,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a9daaca4f002848b3f87c24313d5f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  N: 5
+  N: 2
   Minimum: 1
   Maximum: 10
   ElementPrefab: {fileID: 5961775950333137350, guid: 78d39b9808642e1449a88db27d528912,
     type: 3}
   SwapInSeconds: 2
   IntervalInSeconds: 1
-  ESortAlgorithm: 1
+  ESortAlgorithm: 2
 --- !u!4 &130241082
 Transform:
   m_ObjectHideFlags: 0
