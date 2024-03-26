@@ -46,16 +46,18 @@ namespace X.HotFix.Games.Sort
 
 		private static async UniTask Swap(List<ElementPresenter> elements, ElementPresenter elementPresenter, ElementPresenter e, float swapInSeconds)
 		{
-			if (elementPresenter.Index == e.Index)
-			{
-				return;
-			}
+			e.UpdateState(eElementState.Swapping);
+			await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
 			var a = elementPresenter.Index;
 			var b = e.Index;
-			await UniTask.WhenAll(
-				elementPresenter.MoveVertical(b, swapInSeconds),
-				e.MoveVertical(a, swapInSeconds)
-				);
+			if (elementPresenter.Index != e.Index)
+			{
+				await UniTask.WhenAll(
+					elementPresenter.MoveVertical(b, swapInSeconds),
+					e.MoveVertical(a, swapInSeconds)
+					);
+			}
+			e.UpdateState(eElementState.Sorted);
 			elements[b] = elementPresenter;
 			elements[a] = e;
 		}
