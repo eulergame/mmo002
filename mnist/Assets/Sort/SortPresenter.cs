@@ -11,6 +11,7 @@ namespace X.HotFix.Games.Sort
 		Selection,
 		Bubble,
 		Insertion,
+		Merge,
 	}
 	public class SortPresenter : MonoBehaviour
 	{
@@ -48,9 +49,24 @@ namespace X.HotFix.Games.Sort
 				eSortAlgorithm.Selection => Selection,
 				eSortAlgorithm.Bubble => Bubble,
 				eSortAlgorithm.Insertion => Insertion,
+				eSortAlgorithm.Merge => Merge,
 				_ => throw new NotImplementedException(),
 			};
 			await s(elements);
+			for (int i = 1; i < 100; i++)
+			{
+				for (int j = 1; j < 100; j++)
+				{
+					var x = MathF.Sqrt(i * i + j * j);
+					if (MathF.Ceiling(x) == MathF.Floor(x))
+					{
+						if (x - Math.Max(i, j) == 1)
+						{
+							Debug.Log($"{i} {j} {x}");
+						}
+					}
+				}
+			}
 		}
 
 		private async UniTask Selection(List<ElementPresenter> elements)
@@ -108,7 +124,36 @@ namespace X.HotFix.Games.Sort
 						await Swap(elements, elements[k], elements[k - 1], SwapInSeconds);
 						await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
 						elements[k].UpdateState(eElementState.Sorted);
-						elements[k-1].UpdateState(eElementState.Sorted);
+						elements[k - 1].UpdateState(eElementState.Sorted);
+					}
+					else
+					{
+						break;
+					}
+				}
+				elements[i].UpdateState(eElementState.Sorted);
+			}
+		}
+		//Merge sort is a recursive algorithm that continuously splits the array in half until it cannot be further divided
+		//i.e., the array has only one element left (an array with one element is always sorted).
+		//Then the sorted subarrays are merged into one sorted array.
+		//Time Complexity: O(N log(N))
+		//Merge Sort is a recursive algorithm and time complexity can be expressed as following recurrence relation. T(n) = 2T(n/2) + θ(n)
+		private async UniTask Merge(List<ElementPresenter> elements)
+		{
+			elements[0].UpdateState(eElementState.Sorted);
+			await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+			for (int i = 1; i <= elements.Count - 1; i++)
+			{
+				for (int k = i; k > 0; k--)
+				{
+					if (elements[k].Value < elements[k - 1].Value)
+					{
+						elements[k].UpdateState(eElementState.Swapping);
+						await Swap(elements, elements[k], elements[k - 1], SwapInSeconds);
+						await UniTask.Delay(TimeSpan.FromSeconds(IntervalInSeconds));
+						elements[k].UpdateState(eElementState.Sorted);
+						elements[k - 1].UpdateState(eElementState.Sorted);
 					}
 					else
 					{
